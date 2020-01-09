@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+<!--        <referenceBlock name="product.info.overview">-->
+<!--            <arguments>-->
+<!--                <argument name="title" translate="true" xsi:type="string">Short description</argument>-->
+<!--            </arguments>-->
+<!--        </referenceBlock>-->
+
+<!--    title container    -->
+        <container name="content.title.container" htmlTag="div" htmlClass="content-title-container"></container>
+        <move element="content.title.container" destination="content" before="-" />
+
+<!--    box with price, btn, short description    -->
+
+        <container name="product.info.main.price.description" htmlTag="div" htmlClass="product-info-main-price-description"></container>
+        <move element="product.info.main.price.description" destination="product.info.main" after="product.info.review" />
+
+<!--    product title    -->
+<!--        <move element="page.main.title" destination="content" before="-" />-->
+        <move element="page.main.title" destination="content.title.container" before="-" />
+<!--    in stock / out of stock    -->
+        <move element="product.info.stock.sku" destination="product.info.main" before="-" />
+<!--    sku    -->
+<!--        <move element="product.info.sku" destination="content" after="page.main.title" />-->
+        <move element="product.info.sku" destination="content.title.container" after="page.main.title" />
+<!--    rating, stars    -->
+        <move element="product.info.review" destination="product.info.main" after="product.info.stock.sku" />
+<!--    price    -->
+<!--        <move element="product.price.final" destination="product.info.main" after="product.info.review" />-->
+        <move element="product.price.final" destination="product.info.main.price.description" before="-" />
+<!--    viewed    -->
+<!--        <move element="widgetRecentlyViewedProductsGrid" destination="content" after="-" />-->
+        <referenceContainer name="content.aside">
+            <block class="Magento\Catalog\Block\Widget\RecentlyViewed" name="recently_viewed" template="Magento_Catalog::product/widget/viewed/grid.phtml" after="-">
+                <arguments>
+                    <argument name="uiComponent" xsi:type="string">widget_recently_viewed</argument>
+                    <argument name="page_size" xsi:type="number">6</argument>
+                    <!-- 'Product attributes to show' configuration -->
+                    <argument name="show_attributes" xsi:type="string">name,image,price,sku,sku_type,quantity_and_stock_status</argument>
+                    <!-- 'Buttons to show' configuration -->
+                    <argument name="show_buttons" xsi:type="string">add_to_cart,add_to_compare</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+<!--    stock alert notification    -->
+        <move element="productalert.stock" destination="product.info.main.price.description" after="product.price.final" />
+<!--    short description    -->
+<!--        <move element="product.info.overview" destination="product.info.main.price.description" after="productalert.stock" />-->
+        <move element="product.info.overview" destination="product.info.main.price.description" before="product.info.social" />
+<!--    mailto btn    -->
+<!--        <move element="product.info.mailto" destination="product.info.main.price.description" after="product.info.overview" />-->
+        <move element="product.info.mailto" destination="product.info.social" before="-" />
+<!--    view.addto.compare btn    -->
+<!--        <move element="view.addto.compare" destination="product.info.main.price.description" after="product.info.mailto" />-->
+<!--    moving social links    -->
+        <move element="product.info.social" destination="product.info.main.price.description" after="product.info.overview" />
+<!--    add to cart btn    -->
+        <move element="product.info" destination="product.info.main.price.description" after="productalert.stock" />
+<!--    related products    -->
+        <move element="catalog.product.related" destination="content" after="product.info.media" />
+<!--    reviews    -->
+        <move element="reviews.tab" destination="content.aside" before="recently_viewed" />
+<!--    reviews header    -->
+        <referenceContainer name="content.aside">
+            <block class="Magento\Review\Block\Product\Review" name="reviews.counter.qty" template="Magento_Catalog::reviewsCounter.phtml" before="reviews.tab" />
+        </referenceContainer>
+<!--    product info tab attributes    -->
+        <referenceBlock name="product.attributes">
+            <arguments>
+                <argument name="sort_order" xsi:type="string">9</argument>
+            </arguments>
+        </referenceBlock>
+<!--    description as separate block    -->
+        <referenceContainer name="content.aside">
+            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description.duplicate" as="description" template="Magento_Catalog::product/view/attribute.phtml" group="detailed_info" before="reviews.counter.qty">
+                <arguments>
+                    <argument name="at_call" xsi:type="string">getDescription</argument>
+                    <argument name="at_code" xsi:type="string">description</argument>
+                    <argument name="css_class" xsi:type="string">description</argument>
+                    <argument name="at_label" xsi:type="string">none</argument>
+                    <argument name="title" translate="true" xsi:type="string">Details</argument>
+                    <argument name="sort_order" xsi:type="string">10</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+    </body>
+</page>

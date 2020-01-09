@@ -1,0 +1,6 @@
+<?php
+/** @var Magento\Review\Block\Product\Review $block */
+?>
+
+<button class="reviews-header" id="reviews-header" itemprop="reviewCount"><a href="#reviews-header"><?= __('Reviews (%1)', $block->escapeHtml($block->getCollectionSize())); ?></a></button>
+<button class="review-add-btn" id="review-add"><a href="#review-form"><?= __('Leave feedback') ?></a></button>

@@ -1,0 +1,89 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var Magento\Review\Block\Product\View\ListView $block */
+
+$_items = $block->getReviewsCollection()->getItems();
+$format = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
+$url = $block->getReviewsUrl() . '#reviews';
+?>
+<?php if (count($_items)) : ?>
+    <div class="block review-list" id="customer-reviews">
+        <div class="block-content">
+            <ol class="items review-items">
+                <?php foreach ($_items as $_review) : ?>
+                    <li class="item review-item" itemscope itemprop="review" itemtype="http://schema.org/Review">
+                        <div class="review-main">
+                            <div class="review-details">
+                                <p class="review-author">
+                                    <strong class="review-details-value" itemprop="author"><?= $block->escapeHtml($_review->getNickname()) ?></strong>
+                                </p>
+                                <p class="review-date">
+                                    <time class="review-details-value" itemprop="datePublished" datetime="<?= $block->escapeHtmlAttr($block->formatDate($_review->getCreatedAt(), $format)) ?>"><?= $block->escapeHtml($block->formatDate($_review->getCreatedAt(), $format)) ?></time>
+                                </p>
+                            </div>
+
+                            <div class="review-content" itemprop="description">
+                                <?= /* @noEscape */ nl2br($block->escapeHtml($_review->getDetail())) ?>
+                            </div>
+
+                            <p class="review-pros">
+                                <span><?= __('Advantages') ?>:</span> <?= __('good battery, and generally a good smartphone') ?>
+                            </p>
+                            <p class="review-cons">
+                                <span><?= __('Disadvantages') ?>:</span> <?= __('not detected') ?>
+                            </p>
+
+                            <div class="feedback">
+                                <div class="answer">
+                                    <a href="#" class="show-answers"><?= __('1 answer') ?></a>
+                                    <a href="#" class="to-answer"><?= __('Reply') ?></a>
+                                </div>
+                                <div class="helpful"><?= __('Was this review helpful to you') ?>:
+                                    <a href="#" class="thumbs"><i class="far fa-thumbs-up"></i></a> <span class="thumbs-up-counter"><?= __('14') ?></span>
+                                    <a href="#" class="thumbs"><i class="far fa-thumbs-down"></i></a> <span class="thumbs-down-counter"><?= __('3') ?></span></div>
+                            </div>
+                        </div>
+
+                        <?php if (count($_review->getRatingVotes())) : ?>
+                            <div class="review-ratings">
+                                <?php foreach ($_review->getRatingVotes() as $_vote) : ?>
+                                    <div class="rating-summary item" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                        <span class="label rating-label"><span><?= $block->escapeHtml($_vote->getRatingCode()) ?></span></span>
+                                        <div class="rating-result" title="<?= $block->escapeHtmlAttr($_vote->getPercent()) ?>%">
+                                            <meta itemprop="worstRating" content = "1"/>
+                                            <meta itemprop="bestRating" content = "100"/>
+                                            <span style="width:<?= $block->escapeHtmlAttr($_vote->getPercent()) ?>%">
+                                            </span>
+                                        </div>
+                                        <div class="ratingMark" itemprop="ratingValue"><?= $block->escapeHtml($_vote->getPercent()) ?></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+            <div class="toolbar review-toolbar">
+                <?= $block->getChildHtml('toolbar') ?>
+            </div>
+            <button class="reviewsShowHide btnShowHide" id="reviewsShowHide"><?= __('Show all reviews') ?></button>
+        </div>
+    </div>
+<?php endif;?>
+
+<script type="text/x-magento-init">
+    {
+        "#reviewsShowHide": {
+            "js/reviewsShowBtn": {
+                "maxReviews": "3"
+            }
+        },
+        ".review-ratings": {
+            "js/ratingMark": {}
+        }
+    }
+</script>
