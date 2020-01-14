@@ -8,6 +8,11 @@
         box-shadow: none;
     }
 
+    a,
+    button {
+        transition: all .3s;
+    }
+
 //
 //    product tite
 //
@@ -172,6 +177,12 @@
 
                 &:visited {
                     color: @product-alert-stock-color;
+                }
+
+                &:hover {
+                    background-color: @product-alert-stock-border;
+                    color: @product-info-item-content-background;
+                    text-decoration: none;
                 }
             }
         }
@@ -384,6 +395,18 @@
             .product-item-info {
                 width: 100%;
                 position: relative;
+
+                .discount-label {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 5px 12px;
+                    background-color: @discount-label-background;
+                    z-index: 1;
+                    color: @showHideBtn-background;
+                    font-weight: 700;
+                    border-radius: 5px;
+                }
             }
 
             .product-item-photo {
@@ -414,6 +437,16 @@
                         transform: translateY(-50%);
                         font-size: 18px;
                         font-weight: 600;
+                    }
+
+                    &:not(.disabled) {
+                        &:hover {
+                            background-color: @fotorama-border;
+
+                            &::before {
+                                color: @owl-nav-background;
+                            }
+                        }
                     }
 
                     &.disabled {
@@ -906,6 +939,7 @@
                 .owl-item {
                     border: 3px solid @header-panel-wrapper-background;
                     padding: 20px;
+                    height: 440px;
 
                     &:not(:first-child) {
                         border-left-color: transparent;
@@ -916,7 +950,6 @@
                     width: 100%;
                     font-size: 1.3rem;
                     margin: 0;
-                    height: 440px;
 
                     .price-box {
                         .price {

@@ -5,6 +5,8 @@ define([
 ], function ($) {
     'use strict';
 
+    // ko.virtualElements.allowedBindings.afterRender = true;
+
     var mixin = {
         sliderInitialization: function () {
 
@@ -16,19 +18,24 @@ define([
                 dots:false,
                 responsive:{
                     0:{
-                        items:1
+                        items:1,
+                        nav:true
                     },
                     640:{
-                        items:3
+                        items:3,
+                        nav:true
                     },
                     768:{
-                        items:4
+                        items:4,
+                        nav:true
                     },
                     1024:{
-                        items:5
+                        items:5,
+                        nav:true
                     },
                     1280:{
-                        items:6
+                        items:6,
+                        nav:true
                     }
                 }
             });

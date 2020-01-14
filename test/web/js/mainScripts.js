@@ -55,31 +55,6 @@ define([
     });
 
 //
-//    show/hide function for attributes table
-//
-
-    // var attrTable = $('.data.table.additional-attributes tbody > tr'),
-    //     btnShowHide = $('#tableShowHide'),
-    //     isHidden = true,
-    //     arrAttrTable = attrTable.slice(7);
-    //
-    // if (attrTable.length > 7) {
-    //     $(arrAttrTable).each(function () {
-    //         $(this).hide();
-    //     });
-    //
-    //     btnShowHide.click(function () {
-    //         if(isHidden) {
-    //             isHidden = false;
-    //             $(arrAttrTable).show();
-    //         } else {
-    //             isHidden = true;
-    //             $(arrAttrTable).hide();
-    //         }
-    //     });
-    // }
-
-//
 //    show/hide btn for description
 //
 
@@ -107,9 +82,11 @@ define([
         if (descClosed) {
             $('.hide-desc-p').show();
             descClosed = false;
+            $(this).text($.mage.__('Less')).addClass('arrowUp');
         } else {
             $('.hide-desc-p').hide();
             descClosed = true;
+            $(this).text($.mage.__('More')).removeClass('arrowUp');
         }
     });
 
